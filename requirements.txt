@@ -1,0 +1,6 @@
+# Dependencies for iCloud downloader
+pyicloud==1.0.0
+requests>=2.31.0,<3.0.0
+
+# Optional: for progress bars (recommended)
+tqdm>=4.66.0
