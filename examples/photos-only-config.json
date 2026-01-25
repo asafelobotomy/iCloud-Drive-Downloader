@@ -1,0 +1,22 @@
+{
+    "destination": "/mnt/photos-backup",
+    "workers": 10,
+    "retries": 3,
+    "timeout": 60,
+    "include": [
+        "*.jpg",
+        "*.jpeg",
+        "*.png",
+        "*.heic",
+        "*.heif",
+        "*.raw",
+        "*.cr2",
+        "*.nef"
+    ],
+    "exclude": [
+        "*/thumbnails/*",
+        "*/.thumbnails/*"
+    ],
+    "min_size": 10240,
+    "log_level": "INFO"
+}

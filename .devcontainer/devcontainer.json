@@ -1,0 +1,37 @@
+{
+	"name": "iCloud Drive Downloader",
+	"dockerComposeFile": "../docker-compose.dev.yaml",
+	"service": "icloud-downloader",
+	"workspaceFolder": "/app",
+	
+	// Configure tool-specific properties
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": false,
+				"python.formatting.provider": "black",
+				"editor.formatOnSave": true,
+				"files.exclude": {
+					"**/__pycache__": true,
+					"**/*.pyc": true
+				}
+			}
+		}
+	},
+	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally
+	"forwardPorts": [],
+	
+	// Use 'postCreateCommand' to run commands after the container is created
+	"postCreateCommand": "pip install -r requirements.txt",
+	
+	// Comment out to connect as root instead
+	"remoteUser": "root"
+}

@@ -1,0 +1,28 @@
+{
+    "files": {
+        "/path/to/document.pdf": {
+            "status": "complete",
+            "bytes_downloaded": 2048576,
+            "total_bytes": 2048576,
+            "last_updated": "2026-01-25T10:30:46.234567",
+            "error": null
+        },
+        "/path/to/large-file.zip": {
+            "status": "partial",
+            "bytes_downloaded": 52428800,
+            "total_bytes": 104857600,
+            "last_updated": "2026-01-25T10:32:15.123456",
+            "error": null
+        },
+        "/path/to/failed-download.mp4": {
+            "status": "failed",
+            "bytes_downloaded": 1048576,
+            "total_bytes": 52428800,
+            "last_updated": "2026-01-25T10:33:45.789012",
+            "error": "Connection timeout after 3 attempts"
+        }
+    },
+    "metadata": {
+        "created": "2026-01-25T10:30:45.000000"
+    }
+}

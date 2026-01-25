@@ -1,0 +1,9 @@
+{
+    "destination": "/mnt/large-files-backup",
+    "workers": 3,
+    "retries": 10,
+    "timeout": 300,
+    "min_size": 104857600,
+    "sequential": true,
+    "log_level": "DEBUG"
+}

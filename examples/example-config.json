@@ -1,0 +1,19 @@
+{
+    "destination": "/path/to/backup/directory",
+    "workers": 5,
+    "retries": 5,
+    "timeout": 120,
+    "include": [
+        "*.jpg",
+        "*.png",
+        "*.pdf",
+        "Documents/*"
+    ],
+    "exclude": [
+        "*.tmp",
+        "*/Cache/*",
+        "*/.Trash/*"
+    ],
+    "max_depth": 10,
+    "log_level": "INFO"
+}

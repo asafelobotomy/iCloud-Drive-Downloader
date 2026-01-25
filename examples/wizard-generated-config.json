@@ -1,0 +1,14 @@
+{
+    "destination": "/mnt/backup/icloud",
+    "workers": 5,
+    "include": [
+        "*.jpg",
+        "*.jpeg",
+        "*.png",
+        "*.heic",
+        "*.mp4",
+        "*.mov"
+    ],
+    "max_depth": 5,
+    "dry_run": false
+}

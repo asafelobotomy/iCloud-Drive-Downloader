@@ -1,0 +1,8 @@
+{"timestamp": "2026-01-25T10:30:45.123456", "event": "session_start", "config": {"max_retries": 3, "timeout": 60, "workers": 3, "sequential": false, "dry_run": false}, "filters": {"include": ["*.pdf"], "exclude": [], "min_size": null, "max_size": null, "max_depth": null, "max_items": null}}
+{"timestamp": "2026-01-25T10:30:46.234567", "event": "file_completed", "file": "/path/to/document.pdf", "bytes": 2048576, "attempts": 1}
+{"timestamp": "2026-01-25T10:30:47.345678", "event": "file_skipped", "file": "/path/to/existing.pdf", "reason": "already_complete"}
+{"timestamp": "2026-01-25T10:30:48.456789", "event": "file_resume", "file": "/path/to/partial.pdf", "existing_bytes": 512000}
+{"timestamp": "2026-01-25T10:30:50.567890", "event": "file_completed", "file": "/path/to/partial.pdf", "bytes": 1536000, "attempts": 1}
+{"timestamp": "2026-01-25T10:30:51.678901", "event": "file_filtered", "file": "/path/to/image.jpg", "reason": "pattern_or_size"}
+{"timestamp": "2026-01-25T10:30:52.789012", "event": "file_failed", "file": "/path/to/error.pdf", "error": "Connection timeout", "attempts": 3}
+{"timestamp": "2026-01-25T10:35:22.890123", "event": "session_end", "summary": {"files_total": 156, "files_completed": 150, "files_skipped": 4, "files_failed": 2, "bytes_total": 524288000, "bytes_downloaded": 498876416, "elapsed_seconds": 277.77}, "failures_count": 2}
