@@ -3,6 +3,7 @@
 import unittest
 import tempfile
 import os
+import shutil
 import sys
 
 # Add parent directory to path to import the module
@@ -64,7 +65,7 @@ class TestValidatePathSafety(unittest.TestCase):
 
     def tearDown(self):
         """Clean up temporary directory."""
-        os.rmdir(self.temp_root)
+        shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def test_safe_relative_path(self):
         """Test that safe relative paths are accepted."""
@@ -84,6 +85,12 @@ class TestValidatePathSafety(unittest.TestCase):
             validate_path_safety("/absolute/path/file.txt", self.temp_root)
         self.assertIn("Absolute paths not allowed", str(ctx.exception))
 
+    def test_absolute_path_within_root_accepted(self):
+        """Test that internal absolute paths under the root are accepted."""
+        safe_path = os.path.join(self.temp_root, "folder", "file.txt")
+        result = validate_path_safety(safe_path, self.temp_root)
+        self.assertEqual(result, safe_path)
+
     def test_parent_traversal_rejected(self):
         """Test that parent directory traversal is rejected."""
         with self.assertRaises(ValueError) as ctx:
@@ -98,9 +105,18 @@ class TestValidatePathSafety(unittest.TestCase):
 
     def test_path_escaping_root_rejected(self):
         """Test that paths escaping root are rejected."""
-        # This is tricky - depends on implementation details
-        # The function should catch attempts to escape via symlinks or other means
-        pass  # Complex to test without actual filesystem manipulation
+        outside_root = tempfile.mkdtemp()
+        link_dir = os.path.join(self.temp_root, "safe")
+        os.makedirs(link_dir)
+        os.symlink(outside_root, os.path.join(link_dir, "escape"))
+
+        try:
+            escaped_path = os.path.join(self.temp_root, "safe", "escape", "file.txt")
+            with self.assertRaises(ValueError) as ctx:
+                validate_path_safety(escaped_path, self.temp_root)
+            self.assertIn("Absolute paths not allowed outside root", str(ctx.exception))
+        finally:
+            shutil.rmtree(outside_root, ignore_errors=True)
 
     def test_root_itself_accepted(self):
         """Test that the root directory itself is accepted."""

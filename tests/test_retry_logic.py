@@ -67,9 +67,9 @@ class TestCalculateBackoff(unittest.TestCase):
             delay = calculate_backoff(attempt, base_delay=1.0, max_delay=60.0)
             expected = min(1.0 * (2 ** (attempt - 1)), 60.0)
 
-            # Should be within ±10% of expected (plus the jitter)
-            self.assertGreaterEqual(delay, expected * 0.9)
-            self.assertLessEqual(delay, expected * 1.1 + expected * 0.1)
+            # Jitter adds 0–10% on top of the base delay
+            self.assertGreaterEqual(delay, expected)
+            self.assertLessEqual(delay, expected * 1.1)
 
 
 class TestIsRetryableError(unittest.TestCase):

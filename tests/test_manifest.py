@@ -4,6 +4,7 @@ import unittest
 import tempfile
 import os
 import json
+import shutil
 import sys
 
 # Add parent directory to path to import the module
@@ -22,9 +23,7 @@ class TestDownloadManifest(unittest.TestCase):
 
     def tearDown(self):
         """Clean up temporary files."""
-        if os.path.exists(self.manifest_path):
-            os.remove(self.manifest_path)
-        os.rmdir(self.temp_dir)
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_new_manifest(self):
         """Test creating a new manifest."""
@@ -125,6 +124,22 @@ class TestDownloadManifest(unittest.TestCase):
         manifest = DownloadManifest(self.manifest_path)
         self.assertIsNotNone(manifest.data)
         self.assertEqual(len(manifest.data["files"]), 0)
+
+    def test_wrong_encryption_key_starts_fresh(self):
+        """Manifest encrypted with one key should start fresh when loaded with a different key."""
+        from icloud_downloader_lib.crypto import encrypt_bytes
+
+        original_key = os.urandom(32)
+        wrong_key = os.urandom(32)
+
+        # Write a manifest encrypted with original_key
+        manifest = DownloadManifest(self.manifest_path, encryption_key=original_key)
+        manifest.update_file("test.txt", "completed")
+        manifest._save()
+
+        # Load with wrong key — should start fresh, not crash
+        manifest2 = DownloadManifest(self.manifest_path, encryption_key=wrong_key)
+        self.assertEqual(len(manifest2.data["files"]), 0)
 
 
 if __name__ == "__main__":

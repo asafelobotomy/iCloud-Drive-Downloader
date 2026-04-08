@@ -1,5 +1,6 @@
 """Tests for FileFilter class."""
 
+from datetime import datetime, timedelta
 import unittest
 import sys
 import os
@@ -100,6 +101,41 @@ class TestFileFilter(unittest.TestCase):
 
         # Wrong pattern
         self.assertFalse(filter.should_include("document.pdf", size=50000))
+
+    def test_modified_date_filters(self):
+        now = datetime.now()
+        filter = FileFilter(
+            modified_after=now - timedelta(days=1),
+            modified_before=now + timedelta(days=1),
+        )
+
+        self.assertFalse(filter.should_include("old.txt", modified_date=now - timedelta(days=2)))
+        self.assertFalse(filter.should_include("future.txt", modified_date=now + timedelta(days=2)))
+        self.assertTrue(filter.should_include("current.txt", modified_date=now))
+
+    def test_selection_scope_includes_selected_files_and_folder_descendants(self):
+        filter = FileFilter(
+            selected_files=["Docs/report.pdf"],
+            selected_folders=["Photos/Trips"],
+            selection_root="/downloads",
+        )
+
+        self.assertTrue(filter.should_include("/downloads/Docs/report.pdf"))
+        self.assertTrue(filter.should_include("/downloads/Photos/Trips/rome.jpg"))
+        self.assertFalse(filter.should_include("/downloads/Docs/notes.txt"))
+        self.assertFalse(filter.should_include("/downloads/Photos/Family/pic.jpg"))
+
+    def test_selection_scope_limits_directory_traversal_to_relevant_branches(self):
+        filter = FileFilter(
+            selected_files=["Docs/report.pdf"],
+            selected_folders=["Photos/Trips"],
+            selection_root="/downloads",
+        )
+
+        self.assertTrue(filter.should_traverse_directory("/downloads/Docs"))
+        self.assertTrue(filter.should_traverse_directory("/downloads/Photos"))
+        self.assertTrue(filter.should_traverse_directory("/downloads/Photos/Trips"))
+        self.assertFalse(filter.should_traverse_directory("/downloads/Music"))
 
 
 if __name__ == "__main__":
