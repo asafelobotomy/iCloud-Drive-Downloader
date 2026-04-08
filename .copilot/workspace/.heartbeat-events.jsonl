@@ -184,3 +184,4 @@
 {"detail": "complete", "duration_s": 20812, "session_id": "local-45a965a6", "trigger": "stop", "ts": 1775651039, "ts_utc": "2026-04-08T12:23:59Z"}
 {"session_id": "local-45a965a6", "trigger": "compaction", "ts": 1775651093, "ts_utc": "2026-04-08T12:24:53Z"}
 {"session_id": "local-45a965a6", "trigger": "soft_post_tool", "ts": 1775651192, "ts_utc": "2026-04-08T12:26:32Z"}
+{"detail": "complete", "duration_s": 21235, "session_id": "local-45a965a6", "trigger": "stop", "ts": 1775651462, "ts_utc": "2026-04-08T12:31:02Z"}

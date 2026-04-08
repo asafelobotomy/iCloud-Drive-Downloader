@@ -1,5 +1,5 @@
 {
-  "active_work_seconds": 9123,
+  "active_work_seconds": 9478,
   "changed_path_families": [
     "agent",
     "memory",
@@ -18,10 +18,10 @@
   "last_digest_epoch": 1775651085,
   "last_digest_key": "reflective|reflection likely at stop|decision_capture_needed,parity_required,sensitive_surface,verification_expected",
   "last_explicit_epoch": 0,
-  "last_raw_tool_epoch": 1775651404,
+  "last_raw_tool_epoch": 1775651455,
   "last_soft_trigger_epoch": 1775651192,
-  "last_trigger": "pre_tool",
-  "last_write_epoch": 1775651409,
+  "last_trigger": "stop",
+  "last_write_epoch": 1775651462,
   "overlay_decision_capture_needed": true,
   "overlay_parity_required": true,
   "overlay_retro_requested": false,
@@ -45,9 +45,9 @@
   ],
   "route_epoch": 1775651076,
   "route_last_hint_epoch": 1775651100,
-  "route_reason": "prompt:\\bcommit(?: message| my changes)?\\b; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal",
+  "route_reason": "prompt:\\bcommit(?: message| my changes)?\\b; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal; behavior:tool:run_in_terminal",
   "route_signal_counts": {
-    "Commit": 12,
+    "Commit": 15,
     "Planner": 2
   },
   "route_source": "prompt+behavior",
@@ -66,8 +66,8 @@
   "signal_scope_widening": true,
   "signal_work_strong": true,
   "signal_work_supporting": false,
-  "task_window_start_epoch": 1775651100,
-  "tool_call_counter": 1155,
+  "task_window_start_epoch": 0,
+  "tool_call_counter": 1163,
   "touched_files_sample": [
     "tests/README.md",
     "CHANGELOG.md",
