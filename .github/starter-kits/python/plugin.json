@@ -1,0 +1,6 @@
+{
+  "name": "python-starter-kit",
+  "displayName": "Python Starter Kit",
+  "description": "Stack-specific skills, instructions, and prompts for Python projects — pytest patterns, type checking, security practices, and PEP conventions.",
+  "version": "1.0.0"
+}

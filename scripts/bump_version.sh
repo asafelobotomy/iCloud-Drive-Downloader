@@ -3,9 +3,19 @@
 # Usage: ./scripts/bump_version.sh <new_version>
 # Example: ./scripts/bump_version.sh 4.1.0
 
-set -e
+set -euo pipefail
 
-if [ -z "$1" ]; then
+TEMP_CHANGELOG=""
+
+cleanup() {
+    if [ -n "${TEMP_CHANGELOG:-}" ] && [ -f "$TEMP_CHANGELOG" ]; then
+        rm -f "$TEMP_CHANGELOG"
+    fi
+}
+
+trap cleanup EXIT
+
+if [ "${1:-}" = "" ]; then
     echo "Error: No version specified"
     echo "Usage: $0 <new_version>"
     echo "Example: $0 4.1.0"
@@ -25,9 +35,9 @@ echo "Updating version to $NEW_VERSION..."
 # Get the repository root
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Update version in icloud_downloader.py
-echo "  → Updating icloud_downloader.py"
-sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" "$REPO_ROOT/icloud_downloader.py"
+# Update version in the modular source of truth
+echo "  → Updating icloud_downloader_lib/definitions.py"
+sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" "$REPO_ROOT/icloud_downloader_lib/definitions.py"
 
 # Update version badge in README.md
 echo "  → Updating README.md badge"
@@ -42,6 +52,7 @@ if grep -q "## \[$NEW_VERSION\]" "$REPO_ROOT/CHANGELOG.md"; then
 else
     # Add new version section to CHANGELOG.md (after first two lines)
     echo "  → Adding version section to CHANGELOG.md"
+    TEMP_CHANGELOG="$(mktemp "$REPO_ROOT/CHANGELOG.md.XXXXXX")"
     {
         head -n 4 "$REPO_ROOT/CHANGELOG.md"
         echo ""
@@ -59,8 +70,9 @@ else
         echo "---"
         echo ""
         tail -n +5 "$REPO_ROOT/CHANGELOG.md"
-    } > "$REPO_ROOT/CHANGELOG.md.tmp"
-    mv "$REPO_ROOT/CHANGELOG.md.tmp" "$REPO_ROOT/CHANGELOG.md"
+    } > "$TEMP_CHANGELOG"
+    mv "$TEMP_CHANGELOG" "$REPO_ROOT/CHANGELOG.md"
+    TEMP_CHANGELOG=""
 fi
 
 # Verify the changes
@@ -73,7 +85,7 @@ python3 "$REPO_ROOT/icloud_downloader.py" --version
 echo ""
 echo "Next steps:"
 echo "  1. Edit CHANGELOG.md to add release notes for $NEW_VERSION"
-echo "  2. Run tests: python3 -m unittest discover tests/ -q"
+echo "  2. Run tests: python3 -m pytest tests/ -v"
 echo "  3. Commit changes: git add -A && git commit -m 'Bump version to $NEW_VERSION'"
 echo "  4. Tag release: git tag -a v$NEW_VERSION -m 'Release version $NEW_VERSION'"
 echo "  5. Push: git push && git push --tags"

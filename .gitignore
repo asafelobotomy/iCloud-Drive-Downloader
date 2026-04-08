@@ -33,9 +33,17 @@ Thumbs.db
 .icloud_download_manifest.json
 *.log
 *.log.jsonl
+coverage.json
 iCloud_Drive_Download/
 
 # Credentials (never commit these)
 .env
+icloud_config.json
 config-private*.json
 *-credentials.json
+
+# Session artifacts (pyicloud auth state)
+*.session
+*.cookiejar
+*.pem
+*.key

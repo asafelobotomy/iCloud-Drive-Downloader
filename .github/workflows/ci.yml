@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.14"
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-test.txt -c constraints.txt
+
+      - name: Build
+        run: python3 -m py_compile icloud_downloader.py
+
+      - name: Type check
+        run: python3 -m mypy icloud_downloader.py icloud_downloader_lib/ --check-untyped-defs
+
+      - name: LOC budget
+        run: python3 -m pytest tests/test_loc_budget.py -v
+
+      - name: Test
+        run: python3 -m pytest tests/ -v
+
+      - name: Coverage gate
+        if: matrix.python-version == '3.14'
+        run: python3 -m pytest tests/ --cov=icloud_downloader_lib --cov=icloud_downloader --cov-report=term-missing --cov-fail-under=70
