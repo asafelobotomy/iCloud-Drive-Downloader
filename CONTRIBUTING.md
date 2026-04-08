@@ -4,12 +4,13 @@ Thank you for considering contributing to this project! This guide will help you
 
 ## Project Philosophy
 
-This is a **single-file Python utility** (`icloud_downloader.py`) designed for maximum portability. The monolithic architecture is intentional—avoid splitting into modules unless absolutely necessary.
+This is a **portable Python CLI** with a thin wrapper in `icloud_downloader.py` and the main implementation in `icloud_downloader_lib/`. Keep changes small, verified, and consistent with the existing module split.
 
 ## Development Setup
 
 ### Prerequisites
-- Python 3.7 or higher
+
+- Python 3.10 or higher
 - Git
 
 ### Initial Setup
@@ -30,17 +31,17 @@ pip install -r requirements-test.txt
 
 ## Testing
 
-All changes should include tests. We maintain 100% test pass rate.
+All changes should include tests and keep the full suite green.
 
 ```bash
 # Run all tests
-python3 -m unittest discover tests/ -v
+python3 -m pytest tests/ -v
 
 # Run specific test file
-python3 -m unittest tests/test_filters.py -v
+python3 -m pytest tests/test_filters.py -v
 
 # Run with coverage
-python3 -m pytest tests/ --cov=icloud_downloader --cov-report=html
+python3 -m pytest tests/ --cov=icloud_downloader_lib --cov=icloud_downloader --cov-report=html
 
 # Type checking
 python3 -m mypy icloud_downloader.py --check-untyped-defs
@@ -53,22 +54,25 @@ python3 -m mypy icloud_downloader.py --check-untyped-defs
 **Always follow these patterns:**
 
 1. **Path Safety Validation**
+
    ```python
    # ALWAYS validate paths before file operations
    validate_path_safety(path, root)
    ```
 
 2. **Name Sanitization**
+
    ```python
    # ALWAYS sanitize user-provided names
    safe_name = sanitize_name(item_name)
    ```
 
 3. **Secure Permissions**
+
    ```python
    # Files: owner-only read/write
    os.chmod(file_path, 0o600)
-   
+
    # Directories: owner-only rwx
    os.chmod(dir_path, 0o700)
    ```
@@ -82,7 +86,7 @@ class SharedResource:
     def __init__(self):
         self.lock = threading.Lock()
         self.data = {}
-    
+
     def update(self, key, value):
         with self.lock:
             self.data[key] = value
@@ -111,6 +115,7 @@ def process_item(item: str, config: Dict[str, Any]) -> Optional[bool]:
 ### Development Workflow
 
 1. **Create a branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -121,9 +126,10 @@ def process_item(item: str, config: Dict[str, Any]) -> Optional[bool]:
    - Update documentation as needed
 
 3. **Test thoroughly**
+
    ```bash
    # Run tests
-   python3 -m unittest discover tests/ -v
+   python3 -m pytest tests/ -v
    
    # Syntax check
    python3 -m py_compile icloud_downloader.py
@@ -141,12 +147,14 @@ def process_item(item: str, config: Dict[str, Any]) -> Optional[bool]:
    - Add examples to [examples/](examples/) if applicable
 
 5. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "Add feature: brief description"
    ```
 
 6. **Push and create PR**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -155,9 +163,9 @@ def process_item(item: str, config: Dict[str, Any]) -> Optional[bool]:
 
 ### Adding a New Feature
 
-1. Add CLI argument in `parse_arguments()`
-2. Define constant at top of file
-3. Pass config via `config` dict (avoid globals)
+1. Add CLI argument handling in `icloud_downloader_lib/cli.py` or `icloud_downloader_lib/cli_support.py`
+2. Keep parser-only helpers in `icloud_downloader_lib/cli_support.py` so `cli.py` stays within the LOC budget
+3. Pass config via the runtime `config` dict (avoid globals)
 4. Add structured log event if tracking is valuable
 5. Write tests in `tests/test_*.py`
 6. Add example config in `examples/`
@@ -168,7 +176,7 @@ def process_item(item: str, config: Dict[str, Any]) -> Optional[bool]:
 2. Fix the bug
 3. Verify test passes
 4. Document in [CHANGELOG.md](CHANGELOG.md)
-5. Add entry to `docs/development/FIXES_APPLIED.md`
+5. Update the relevant user or developer documentation if the fix changes behavior
 
 ### Improving Documentation
 
@@ -189,8 +197,9 @@ Pull requests are reviewed for:
 
 ## Project Structure
 
-```
-├── icloud_downloader.py          # Main application (1,378 lines)
+```text
+├── icloud_downloader.py          # CLI compatibility wrapper
+├── icloud_downloader_lib/        # Main implementation package
 ├── requirements.txt               # Production dependencies
 ├── requirements-test.txt          # Testing dependencies
 ├── README.md                      # Main documentation
@@ -201,30 +210,37 @@ Pull requests are reviewed for:
 ├── docs/                          # Documentation
 │   ├── README.md                  # Documentation index
 │   ├── QUICK_START.md             # Quick start guide
-│   └── development/               # Development docs
+│   ├── QUICK_REFERENCE.md         # Common commands and flags
+│   ├── INTERACTIVE_MODE.md        # Interactive flow guide
+│   └── RATE_LIMITING_AND_THROTTLING.md  # Operational guidance
 │
 ├── examples/                      # Configuration examples
 │   └── *.json                     # Sample configs
 │
-└── tests/                         # Test suite (63 tests)
+└── tests/                         # Test suite
     └── test_*.py                  # Test files
 ```
 
 ## Key Architecture Decisions
 
-### Single-File Design
-The entire application fits in one file for portability. Resist the urge to split into modules unless the file exceeds 2000 lines.
+### Modular CLI Boundaries
+
+Keep argument parsing in `icloud_downloader_lib/cli.py` and `icloud_downloader_lib/cli_support.py`, orchestration in `icloud_downloader_lib/app.py`, and execution logic in the focused helper modules under `icloud_downloader_lib/`.
 
 ### No External State
+
 All state is passed via parameters or contained in classes. No global variables (except constants).
 
 ### Defense in Depth
+
 Multiple security layers:
+
 - Input sanitization (`sanitize_name`)
 - Path validation (`validate_path_safety`)
 - Secure permissions on all I/O
 
 ### Resume-First Design
+
 Downloads must be resumable. Use manifest tracking and HTTP range requests.
 
 ## Questions?

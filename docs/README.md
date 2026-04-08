@@ -5,7 +5,7 @@ Complete documentation for the iCloud Drive Downloader.
 ## User Documentation
 
 - **[Quick Start Guide](QUICK_START.md)** - Get started in 5 minutes
-- **[Interactive Mode Guide](INTERACTIVE_MODE.md)** - **NEW!** Fully guided setup (no CLI knowledge needed)
+- **[Interactive Mode Guide](INTERACTIVE_MODE.md)** - Fully guided setup (no CLI knowledge needed)
 - **[Rate Limiting & Throttling](RATE_LIMITING_AND_THROTTLING.md)** - Apple's policies, throttling behavior, and mitigation strategies
 - **[Configuration Examples](../examples/README.md)** - Sample config files for common scenarios
 - **[Changelog](../CHANGELOG.md)** - Version history and release notes
@@ -15,9 +15,9 @@ Complete documentation for the iCloud Drive Downloader.
 
 - **[Version Management](VERSION_MANAGEMENT.md)** - Centralized version control system
 - **[Phase 0 Implementation](../archive/dev-notes/PHASE0_CHANGES.md)** - Foundation and security features (archived)
-- **[Code Review Report](development/CODE_REVIEW_REPORT.md)** - Comprehensive security audit (A+ grade)
-- **[Fixes Applied](development/FIXES_APPLIED.md)** - Summary of critical bug fixes
-- **[Implementation Summary](development/IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
+- **[Code Review Report](../archive/dev-notes/CODE_REVIEW_REPORT.md)** - January 2026 security audit (archived)
+- **[Fixes Applied](../archive/dev-notes/FIXES_APPLIED.md)** - January 2026 critical bug fixes (archived)
+- **[Implementation Summary](../archive/dev-notes/IMPLEMENTATION_SUMMARY.md)** - January 2026 technical implementation details (archived)
 
 ## Testing
 
@@ -25,54 +25,11 @@ Complete documentation for the iCloud Drive Downloader.
 
 ## Project Structure
 
-```
-/app
-├── icloud_downloader.py          # Main application (single-file architecture)
-├── requirements.txt               # Production dependencies
-├── requirements-test.txt          # Development and testing dependencies
-├── README.md                      # Main project README
-├── CHANGELOG.md                   # Version history
-│
-├── docs/                          # Documentation
-│   ├── README.md                  # This file
-│   ├── QUICK_START.md             # Quick start guide
-│   ├── INTERACTIVE_MODE.md        # Interactive mode guide
-│   ├── QUICK_REFERENCE.md         # Quick reference card
-│   └── development/               # Development documentation
-│       ├── CODE_REVIEW_REPORT.md
-│       ├── FIXES_APPLIED.md
-│       ├── IMPLEMENTATION_SUMMARY.md
-│       └── INTERACTIVE_MODE_IMPLEMENTATION.md
-│
-├── archive/                       # Archived/deprecated files
-│   ├── README.md                  # Archive documentation
-│   ├── dev-notes/                 # Historical dev docs
-│   └── deprecated/                # Deprecated configs
-│
-├── examples/                      # Configuration examples
-│   ├── README.md
-│   ├── example-config.json
-│   ├── photos-only-config.json
-│   ├── large-files-config.json
-│   └── sample-manifest.json
-│
-├── tests/                         # Test suite (63 tests)
-│   ├── README.md
-│   ├── test_filters.py
-│   ├── test_manifest.py
-│   ├── test_path_security.py
-│   ├── test_retry_logic.py
-│   ├── test_cache.py
-│   ├── test_stats.py
-│   └── test_integration.py
-│
-└── .github/                       # GitHub configuration
-    └── copilot-instructions.md    # AI agent instructions
-```
+Use the top-level [README](../README.md#project-structure) for the current project layout. Keep this docs index focused on navigation so it does not drift from the codebase.
 
 ## Contributing
 
-This is a single-file architecture project. See [copilot-instructions.md](../.github/copilot-instructions.md) for development guidelines and patterns to follow when contributing.
+This project uses a thin wrapper in `icloud_downloader.py` and the main implementation in `icloud_downloader_lib/`. See [copilot-instructions.md](../.github/copilot-instructions.md) for development guidelines and patterns to follow when contributing.
 
 ## Support
 

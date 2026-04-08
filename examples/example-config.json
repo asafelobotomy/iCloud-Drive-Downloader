@@ -3,6 +3,11 @@
     "workers": 5,
     "retries": 5,
     "timeout": 120,
+    "session_dir": "/path/to/session/state",
+    "use_keyring": false,
+    "china_mainland": false,
+    "resume": true,
+    "progress": true,
     "include": [
         "*.jpg",
         "*.png",

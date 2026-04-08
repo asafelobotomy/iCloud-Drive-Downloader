@@ -18,7 +18,7 @@ This directory contains files that are no longer actively used but are preserved
 ### Development Notes
 - `PHASE0_CHANGES.md` - Phase 0 implementation notes (foundation features)
   - Reason: Historical record of initial implementation
-  - Superseded by: Current documentation in `docs/development/`
+  - Superseded by: Current documentation in `../docs/` and `../docs/README.md`
 
 ### Deprecated Files
 - `.env.example` - Example environment file

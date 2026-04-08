@@ -10,7 +10,7 @@ echo "This shows what happens when you run:"
 echo "  $ python3 icloud_downloader.py"
 echo ""
 echo "Press Enter to continue..."
-read
+read -r
 
 clear
 
@@ -43,19 +43,26 @@ echo "✓ Apple ID: user@example.com"
 echo ""
 sleep 2
 
-echo "Step 2: App-Specific Password"
-echo "Important: You need an app-specific password (NOT your regular password)"
-echo "Get one at: https://appleid.apple.com/account/manage"
-echo "  → Sign in → Security → App-Specific Passwords → Generate"
+echo "Step 2: Apple ID Password"
+echo "Important: pyicloud signs in with your regular Apple ID password,"
+echo "then Apple handles any required two-factor authentication."
 echo ""
-echo -n "Enter app-specific password: "
+echo -n "Enter your Apple ID password: "
 sleep 1
 echo "****************"
-echo "✓ Password saved"
+echo "✓ Password captured for this session only"
 echo ""
 sleep 2
 
-echo "Step 3: Choose download location"
+echo "Step 3: Auth and session options"
+echo -n "Configure keyring or session settings? [y/N]: "
+sleep 1
+echo ""
+echo "✓ Using default auth and session settings"
+echo ""
+sleep 2
+
+echo "Step 4: Choose download location"
 echo -n "Download folder [/root/iCloud_Drive_Download]: "
 sleep 1
 echo ""
@@ -63,7 +70,7 @@ echo "✓ Will save to: /root/iCloud_Drive_Download"
 echo ""
 sleep 2
 
-echo "Step 4: What would you like to download?"
+echo "Step 5: What would you like to download?"
 echo "  1. Everything (full backup)"
 echo "  2. Photos and videos only"
 echo "  3. Documents only"
@@ -77,7 +84,7 @@ echo "✓ Will download everything"
 echo ""
 sleep 2
 
-echo "Step 5: Performance settings"
+echo "Step 6: Performance settings"
 echo "How many concurrent downloads? (1-10)"
 echo "💡 Tip: More workers = faster downloads, but uses more bandwidth"
 echo -n "Workers [3]: "
@@ -87,7 +94,7 @@ echo "✓ Will use 3 concurrent downloads"
 echo ""
 sleep 2
 
-echo "Step 6: Preview before downloading (recommended)"
+echo "Step 7: Preview before downloading (recommended)"
 echo "Preview what will be downloaded without actually downloading anything?"
 echo "💡 Tip: This lets you verify before using bandwidth"
 echo -n "Preview only? [Y/n]: "
@@ -97,14 +104,15 @@ echo "✓ Will run in preview mode (no actual downloads)"
 echo ""
 sleep 2
 
-echo "Step 7: Save configuration (optional)"
+echo "Step 8: Save configuration (optional)"
+echo "Credentials are never written to saved config files."
 echo -n "Save this configuration for next time? [Y/n]: "
 sleep 1
 echo "y"
-echo -n "Config filename [icloud_config.json]: "
+echo -n "Config filename [config-private.json]: "
 sleep 1
 echo ""
-echo "✓ Configuration saved to: icloud_config.json"
+echo "✓ Will save configuration"
 echo ""
 sleep 2
 

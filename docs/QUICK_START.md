@@ -2,6 +2,8 @@
 
 ## Installation
 
+This project requires Python 3.10 or newer.
+
 ```bash
 # Install core dependencies
 pip install -r requirements.txt
@@ -21,16 +23,19 @@ python3 icloud_downloader.py -d /mnt/backup
 
 # Preview before downloading
 python3 icloud_downloader.py --dry-run
+
+# Download from Photos Library instead of iCloud Drive
+python3 icloud_downloader.py --source photos-library --photos-scope photos
 ```
 
 ## Testing
 
 ```bash
 # Run all tests
-python3 -m unittest discover tests/ -v
+python3 -m pytest tests/ -v
 
 # Run specific test
-python3 tests/test_filters.py
+python3 -m pytest tests/test_filters.py -v
 ```
 
 ## Using Configuration Files
@@ -46,6 +51,7 @@ python3 icloud_downloader.py --workers 5 --include "*.pdf" --save-config my-conf
 ## Common Workflows
 
 ### Backup Photos Only
+
 ```bash
 python3 icloud_downloader.py \
   --include "*.jpg" --include "*.png" --include "*.heic" \
@@ -55,6 +61,7 @@ python3 icloud_downloader.py \
 ```
 
 ### Large Files Only
+
 ```bash
 python3 icloud_downloader.py \
   --min-size 104857600 \
@@ -64,6 +71,7 @@ python3 icloud_downloader.py \
 ```
 
 ### Safe Trial Run
+
 ```bash
 python3 icloud_downloader.py \
   --dry-run \
@@ -71,11 +79,21 @@ python3 icloud_downloader.py \
   --max-depth 2
 ```
 
+### Photos Library By Month
+
+```bash
+python3 icloud_downloader.py \
+  --source photos-library \
+  --photos-scope by-month \
+  --photos-month 2026-03 \
+  -d /mnt/photo-archive
+```
+
 ## Environment Variables
 
 ```bash
 export ICLOUD_APPLE_ID="user@example.com"
-export ICLOUD_PASSWORD="app-specific-password"
+export ICLOUD_PASSWORD="your-apple-id-password"
 python3 icloud_downloader.py
 ```
 
@@ -85,14 +103,17 @@ python3 icloud_downloader.py
 # Show all options
 python3 icloud_downloader.py --help
 
-# Check version/syntax
+# Check version
+python3 icloud_downloader.py --version
+
+# Check syntax
 python3 -m py_compile icloud_downloader.py
 ```
 
 ## Documentation
 
-- [README.md](README.md) - Complete documentation
-- [tests/README.md](tests/README.md) - Testing guide
-- [examples/README.md](examples/README.md) - Configuration examples
-- [CHANGELOG.md](CHANGELOG.md) - Version history
-- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - Recent improvements
+- [README.md](../README.md) - Complete documentation
+- [tests/README.md](../tests/README.md) - Testing guide
+- [examples/README.md](../examples/README.md) - Configuration examples
+- [CHANGELOG.md](../CHANGELOG.md) - Version history
+- [docs/README.md](README.md) - Documentation index

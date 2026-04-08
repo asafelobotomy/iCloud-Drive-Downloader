@@ -2,10 +2,10 @@
 
 > **Download entire folders from iCloud Drive** - The functionality Apple should have built into iCloud.com
 
-[![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)](../CHANGELOG.md)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
-[![Code Quality: A+](https://img.shields.io/badge/code%20quality-A+-brightgreen.svg)](docs/development/CODE_REVIEW_REPORT.md)
-[![Tests: 63 Passing](https://img.shields.io/badge/tests-63%20passing-success.svg)](tests/)
+[![Code Quality: A+](https://img.shields.io/badge/code%20quality-A+-brightgreen.svg)](dev-notes/CODE_REVIEW_REPORT.md)
+[![Tests: 63 Passing](https://img.shields.io/badge/tests-63%20passing-success.svg)](../tests/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -570,7 +570,7 @@ Tracks download state for resume capability:
 - **[Configuration Examples](examples/README.md)** - Sample configs for common use cases
 - **[Test Suite Documentation](tests/README.md)** - Running tests and coverage
 - **[Development Docs](docs/README.md)** - Implementation details and code reviews
-- **[Changelog](CHANGELOG.md)** - Full version history
+- **[Changelog](../CHANGELOG.md)** - Full version history
 
 ## Code Quality
 
@@ -579,13 +579,13 @@ This project includes:
 - ✅ **Type hints** throughout codebase for better IDE support and safety
 - ✅ **Thread-safe** operations with proper locking
 - ✅ **Security-first** design with path validation and secure permissions
-- ✅ **A+ code quality** (see [Code Review Report](docs/development/CODE_REVIEW_REPORT.md))
+- ✅ **A+ code quality** (see [Code Review Report](dev-notes/CODE_REVIEW_REPORT.md))
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing guidelines, and code patterns.
+Contributions are welcome! Please see [CONTRIBUTING.md](../CONTRIBUTING.md) for development setup, testing guidelines, and code patterns.
 
-This is a single-file Python utility designed for portability. See [.github/copilot-instructions.md](.github/copilot-instructions.md) for detailed development patterns and conventions.
+This is a single-file Python utility designed for portability. See [.github/copilot-instructions.md](../.github/copilot-instructions.md) for detailed development patterns and conventions.
 
 ## License
 

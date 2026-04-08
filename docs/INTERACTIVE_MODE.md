@@ -1,114 +1,128 @@
 # Interactive Mode Guide
 
-## Overview
+## Start Interactive Mode
 
-iCloud Drive Downloader features a **fully interactive mode** that makes downloading your iCloud files as simple as answering a few questions. No command-line knowledge required!
+Interactive mode is the fastest way to configure a download if you do not want to learn the CLI first.
 
-## Quick Start
-
-Just run the script with no arguments:
+Run the downloader with no arguments:
 
 ```bash
 python3 icloud_downloader.py
 ```
 
-That's it! The script automatically detects that you haven't specified any configuration and enters interactive mode.
+The downloader detects the empty command line and opens the main menu automatically.
 
-## What to Expect
+## Preview the Flow
 
 ### Interactive Flow Example
 
 Here's what you'll see when you run the script:
 
-```
-Running in interactive mode...
-(Use --help to see command-line options)
-
+```text
 ============================================================
-   iCloud Drive Downloader - Interactive Setup
+   iCloud Drive Downloader
 ============================================================
 
-Welcome! Let's download your iCloud Drive files.
+Let's download your iCloud Drive files.
 
-💡 Tip: Press Enter to use default values shown in [brackets]
+💡 Tip: Use Configure from the main menu to change your saved defaults.
+
+  1. 🚀  Start          — use saved preferences and log in
+  2. ⚙️   Configure      — change download and auth defaults
+  3. 🚪  Exit
+
+Enter choice [1]:
 
 Step 1: Apple ID
 Enter your Apple ID (email): user@example.com
 ✓ Apple ID: user@example.com
 
-Step 2: App-Specific Password
-Important: You need an app-specific password (NOT your regular password)
-Get one at: https://appleid.apple.com/account/manage
-  → Sign in → Security → App-Specific Passwords → Generate
+Step 2: Apple ID Password
+Important: pyicloud signs in with your regular Apple ID password,
+then Apple handles any required two-factor authentication.
+The password stays in memory for this session unless you choose keyring storage.
 
-Enter app-specific password: ****************
-✓ Password saved
+Enter your Apple ID password: ****************
+✓ Password captured for this session only
 
-Step 3: Choose download location
-Download folder [/root/iCloud_Drive_Download]: /mnt/backup
-✓ Will save to: /mnt/backup
+Step 3: Choose what to download
+  Select an iCloud Drive or Photos option below.
 
-Step 4: What would you like to download?
-  1. Everything (full backup)
-  2. Photos and videos only
-  3. Documents only
-  4. Quick test (first 50 files)
-  5. Custom filters (advanced)
+Choose an option below:
+  iCloud Drive
+  1. ☁️   Everything     — download all iCloud Drive files
+  2. 📁  By directory    — pick folders after scanning Drive
+  3. 🔍  Explore Drive   — pick folders and files after scanning
+  4. 📄  Documents       — download common document files
+  5. 🧪  Quick test      — first 50 files, 2 levels deep
+  6. ⚙️   Custom filters  — set include and exclude patterns
+
+  iCloud Photo Library
+  7. 🖼️   All photos & videos — download the full library
+  8. 📸  All photos          — photos only
+  9. 🎬  All videos          — videos only
+ 10. 🗂️   By album            — choose one album
+ 11. 📅  By month            — choose one month
 
 Enter choice [1]: 2
-✓ Will download photos and videos only
+✓ Download mode for this run: Browse iCloud Drive folders
 
-Step 5: Performance settings
-How many concurrent downloads? (1-10)
-💡 Tip: More workers = faster downloads, but uses more bandwidth
-Workers [3]: 5
-✓ Will use 5 concurrent downloads
-
-Step 6: Preview before downloading (recommended)
-Preview what will be downloaded without actually downloading anything?
-💡 Tip: This lets you verify before using bandwidth
-Preview only? [Y/n]: y
-✓ Will run in preview mode (no actual downloads)
-
-Step 7: Save configuration (optional)
-Save this configuration for next time? [Y/n]: y
-Config filename [icloud_config.json]: my_backup.json
-✓ Configuration saved to: my_backup.json
+Step 4: Current preferences
+  Download folder: ~/iCloud_Drive_Download
+  Download mode: Browse iCloud Drive folders
+  Concurrent downloads: 3
+  Preview before downloading: No
+  Resume downloads: Yes
 
 ✓ Setup complete!
 
-Starting download...
-
-Press Enter to begin...
+Starting...
 ```
 
-## Key Features
+## What Interactive Mode Does
 
-### 1. Smart Defaults
+### Smart Defaults
+
 Every question shows a sensible default in `[brackets]`. Just press Enter to accept it.
 
-### 2. Helpful Tips
+### Choose After Login
+
+Start always shows the iCloud Drive and Photos chooser after login. Configure no longer stores a separate default download mode.
+
+### Helpful Tips
+
 Look for 💡 markers throughout - they provide context-sensitive guidance at each step.
 
-### 3. App-Specific Password Help
-The wizard provides the exact link and navigation path to create an Apple app-specific password. No searching required!
+### Password Guidance
 
-### 4. Validation
+The wizard explains that pyicloud signs in with your regular Apple ID password, then Apple handles 2FA if the account requires it.
+
+### Validation
+
 Invalid inputs are caught immediately with helpful error messages.
 
-### 5. Configuration Saving
+### Configuration Saving
+
 Save your choices to a config file and reuse it later:
 
 ```bash
 python3 icloud_downloader.py --config my_backup.json
 ```
 
-### 6. Preview Mode
+Saved config files keep download settings only. Interactive mode never writes your Apple ID or Apple ID password to disk.
+
+### Optional Auth and Session Setup
+
+Interactive mode can enable keyring-backed passwords, choose a dedicated session directory, and switch to China mainland routing when needed.
+
+### Preview Mode
+
 Highly recommended for first runs! Preview mode shows you exactly what will be downloaded without using bandwidth or storage.
 
-## When Interactive Mode Triggers
+## When Interactive Mode Starts
 
 Interactive mode automatically starts when:
+
 - You run the script with **no arguments**
 - You haven't specified any of these flags:
   - `--config` (loading saved config)
@@ -119,7 +133,7 @@ Interactive mode automatically starts when:
   - `--max-items/--max-depth` (limits)
   - `--save-config` (saving config only)
 
-## Bypassing Interactive Mode
+## Skip Interactive Mode
 
 If you want to use command-line arguments directly:
 
@@ -133,88 +147,98 @@ python3 icloud_downloader.py --preset photos
 # Load saved config
 python3 icloud_downloader.py --config my_backup.json
 
-# Or explicitly use the wizard flag
+# Or jump straight into the setup wizard
 python3 icloud_downloader.py --wizard
 ```
 
-## Using Environment Variables
+## Use Environment Variables
 
 If you set these environment variables, the wizard skips asking for credentials:
 
 ```bash
 export ICLOUD_APPLE_ID="user@example.com"
-export ICLOUD_PASSWORD="xxxx-xxxx-xxxx-xxxx"
+export ICLOUD_PASSWORD="your-apple-id-password"
 
 # Now the wizard won't ask for Apple ID or password
 python3 icloud_downloader.py
 ```
 
 This is useful for:
+
 - Repeated runs
 - Automation scripts
 - Keeping credentials out of shell history
 
-## Common Patterns
+## Common Workflows
 
-### First Time User
+### First Run
+
 ```bash
-# Just run it - follow the prompts
+# Just run it and follow the prompts
 python3 icloud_downloader.py
 ```
 
-### Preview First (Recommended)
+### Preview First
+
 ```bash
-# Run interactive mode, choose Preview
+# Run the wizard and choose preview
 python3 icloud_downloader.py
 # Review output, then run again without preview
-python3 icloud_downloader.py --config icloud_config.json
+python3 icloud_downloader.py --config config-private.json
 ```
 
-### Quick Photo Backup
+### Download Photos Quickly
+
 ```bash
-# Interactive mode, select option 2 (Photos)
+# Start from the main menu, then choose a Photos Library option
 python3 icloud_downloader.py
 ```
 
-### Test Run
+### Run a Small Test
+
 ```bash
-# Interactive mode, select option 4 (Quick test)
+# Start from the main menu, then choose Quick test
 python3 icloud_downloader.py
 ```
 
-### Advanced: Custom Filters
+### Use Custom Filters
+
 ```bash
-# Interactive mode, select option 5 (Custom)
-# Then enter patterns like: *.pdf,*.docx
+# Start from the main menu, then choose Custom filters and enter patterns like: *.pdf,*.docx
 python3 icloud_downloader.py
 ```
 
-## Troubleshooting
+## Troubleshoot Interactive Auth and Setup
 
-### "Apple ID is required"
-The wizard exits if you leave Apple ID blank. Enter your iCloud email address.
+### Apple ID Is Required
 
-### "Password is required"
-You must enter an app-specific password. Follow the link provided in the wizard to generate one.
+Interactive mode exits if you leave Apple ID blank. Enter your iCloud email address.
 
-### App-Specific Password Doesn't Work
+### Password Is Required
+
+You must enter your Apple ID password unless you already provided it through `ICLOUD_PASSWORD` or the system keyring.
+
+### Login Still Fails With the Correct Password
+
 Common issues:
-1. Make sure it's an **app-specific password**, not your regular Apple password
-2. Check that 2FA is enabled on your Apple account
-3. Try generating a fresh app-specific password
+
+1. Use your regular Apple ID password, not an app-specific password
+2. Sign in once at `https://www.icloud.com` and accept any pending Apple prompts or terms
+3. Use `--china-mainland` if your Apple ID region is China mainland
 4. Check your internet connection
 
-### Want to Skip Preview Later
-If you saved a config with `"dry_run": true`, edit the config file or use:
-```bash
-python3 icloud_downloader.py --config my_backup.json --no-dry-run
-```
-(Note: `--no-dry-run` doesn't exist yet, so just edit the JSON file to set `"dry_run": false`)
+If Apple exposes multiple verification routes, the CLI can guide you through trusted-device, SMS, or phone-call code delivery. If pyicloud exposes a broken security-key challenge without the required WebAuthn payload, choose one of the available code-delivery methods instead.
 
-## Comparison with Command-Line Mode
+### Skip Preview on a Later Run
+
+If you saved a config with `"dry_run": true`, edit the config file and set it to `false`, or rerun without that saved config and choose not to preview.
+
+There is no `--no-dry-run` flag.
+
+## Compare Wizard and CLI Modes
 
 | Interactive Mode | Command-Line Mode |
-|-----------------|-------------------|
+| ---------------- | ----------------- |
 | Guided questions | Requires knowing flags |
 | Validates input immediately | Silent failures possible |
 | Shows tips and help | Requires reading docs |
@@ -222,11 +246,11 @@ python3 icloud_downloader.py --config my_backup.json --no-dry-run
 | Can save config | Can load config |
 | User-friendly | Power-user efficient |
 
-**Best Practice**: Use interactive mode to configure your setup once, save the config, then use `--config` for repeated runs.
+Use interactive mode once to create a working configuration, then switch to `--config` for repeated runs.
 
 ## See Also
 
 - [Quick Start Guide](../README.md#quick-start) - Getting started
-- [Preset Configurations](PRESETS.md) - Pre-built configs
-- [Configuration Files](CONFIGURATION.md) - JSON config format
-- [Command-Line Reference](CLI_REFERENCE.md) - All available flags
+- [Quick Reference](QUICK_REFERENCE.md) - Common commands and flags
+- [Configuration Examples](../examples/README.md) - Sample JSON config files
+- [README CLI Reference](../README.md#cli-reference) - All available flags

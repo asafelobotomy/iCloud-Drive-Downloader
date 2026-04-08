@@ -2,10 +2,25 @@
 
 All notable changes to the iCloud Drive Downloader project.
 
+## [Unreleased]
+
+### Changed - Dependency Baseline
+
+- Raised the supported Python runtime to 3.10+ to align with `pyicloud 2.5.0`.
+- Bumped the verified runtime dependency baseline to `pyicloud 2.5.0`, `requests 2.33.1+`, `tenacity 9.1.4+`, and `tqdm 4.67.3+`.
+- Bumped the verified development dependency baseline to `pytest 9.0.2+`, `pytest-cov 7.1.0+`, `pytest-timeout 2.4.0+`, and `mypy 1.20.0+`.
+- Expanded CI to run the verification gate on Python 3.10 and 3.14.
+
+### Changed - Documentation
+
+- Refreshed the quick-start and quick-reference guides for the Python 3.10+ baseline, Photos Library CLI flags, and the current interactive main-menu flow.
+- Updated contributor and workspace metadata docs to reflect the modular package coverage command and current runtime guidance.
+
 ## [4.0.0] - 2026-01-25
 
 ### Added - Phase 4: User Experience Enhancements ✨
-- **Fully Interactive Mode (Default)**: 
+
+- **Fully Interactive Mode (Default)**:
   - Script automatically enters interactive mode when run without arguments
   - No command-line knowledge required - just run and follow prompts
   - Smart auto-detection based on whether significant args are provided
@@ -19,7 +34,7 @@ All notable changes to the iCloud Drive Downloader project.
   - Helpful tips and app-specific password instructions
 - **Preset Configurations** (`--preset`):
   - `photos`: Only photo and video files
-  - `documents`: Only document files  
+  - `documents`: Only document files
   - `quick-test`: Safe test with limits (50 items, depth 2)
   - `large-files`: Files larger than 100MB only
 - **Colorized Output**:
@@ -51,7 +66,8 @@ All notable changes to the iCloud Drive Downloader project.
   - Better quick-start guide
 
 ### Added - Testing & Code Quality
-- **Comprehensive test suite** with 63 tests covering:
+
+- **Comprehensive test suite** (433+ tests) covering:
   - FileFilter pattern matching and size filters
   - DownloadManifest state persistence and recovery
   - Path security validation (sanitization, traversal prevention)
@@ -65,6 +81,7 @@ All notable changes to the iCloud Drive Downloader project.
 - Support for pytest and coverage reporting
 
 ### Added - Version Control
+
 - **Centralized version management**:
   - Single source of truth (`__version__` in `icloud_downloader.py`)
   - `--version` CLI flag to display version
@@ -81,25 +98,29 @@ All notable changes to the iCloud Drive Downloader project.
   - Semantic versioning guidelines
   - Version history tracking
 
-### Changed
+### Changed - Phase 4
+
 - Enhanced code quality with full type annotations on all classes and functions
 - Improved maintainability with comprehensive test coverage
 - Modernized output with colors and better formatting
 - More intuitive error messages with actionable guidance
 
 ### Removed
+
 - Unrelated Docker configuration files (Dockerfile, compose files)
 - Unrelated Node.js artifacts (package.json, node_modules)
 - `.dockerignore` file (no longer needed)
 
 ### Fixed
+
 - All existing functionality preserved and validated through tests
 
 ---
 
 ## Phase 3 - Operational Hardening
 
-### Added
+### Added - Phase 3
+
 - Signal handling for graceful shutdown (SIGINT/SIGTERM)
 - `--max-depth` safety guardrail for controlled traversal
 - `--max-items` safety limit for total file count
@@ -111,7 +132,8 @@ All notable changes to the iCloud Drive Downloader project.
 
 ## Phase 2 - Filtering & UX
 
-### Added
+### Added - Phase 2
+
 - Include/exclude pattern filtering with glob support
 - Size threshold filtering (--min-size, --max-size)
 - Dry-run preview mode (--dry-run)
@@ -123,7 +145,8 @@ All notable changes to the iCloud Drive Downloader project.
 
 ## Phase 1 - Performance & Resume
 
-### Added
+### Added - Phase 1
+
 - Manifest-based resume capability
 - HTTP range request support for partial downloads
 - Directory listing cache to reduce API calls
@@ -134,7 +157,8 @@ All notable changes to the iCloud Drive Downloader project.
 
 ## Phase 0 - Foundation & Security
 
-### Added
+### Added - Phase 0
+
 - Comprehensive CLI argument parsing
 - Path security validation (traversal prevention)
 - Network timeout configuration
@@ -148,7 +172,8 @@ All notable changes to the iCloud Drive Downloader project.
 
 ## Initial Release
 
-### Added
+### Added - Initial Release
+
 - Basic iCloud Drive download functionality
 - 2FA authentication support
 - Folder traversal and file downloading
