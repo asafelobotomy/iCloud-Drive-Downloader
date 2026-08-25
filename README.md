@@ -1,5 +1,7 @@
 # iCloud Drive Downloader
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U5R225QZH3)
+
 > **Download entire folders from iCloud Drive in minutes.** Simple, fast, and reliable.
 
 [![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)](CHANGELOG.md)
